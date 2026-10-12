@@ -22,6 +22,7 @@
 - 🦀 Designed and built **NRXP / Netrunner** — a multiplexed, multipath L3 VPN in **Rust** that travels as ordinary HTTPS (TLS 1.3, Chrome fingerprint). Client for Linux / OpenWrt / Android, server node, mesh, docs, tests.
 - 🧠 Went down to the TCP/IP layer: forked **smoltcp** and added a from-scratch **BBR** congestion controller, BDP-sized dynamic buffers and AQM for a userspace tunnel.
 - 🌐 Before that: **fullstack product work** (React / Next.js / Nest.js) on a high-traffic fintech platform — **-50 % page load, -40 % build time, re-renders cut from 20–30 to 2–3**.
+- 🧰 Broad market stack beyond the core focus: **C# / .NET** ecosystem (Unity, fintech teams), **Java / Kotlin** mobile, **Spring**, Node, React.
 - 📦 Ship open-source: a **WebAssembly game library** on npm and a **state-management library** for React.
 
 ---
@@ -43,9 +44,6 @@
 | **L3 VPN** | TUN + userspace stack (no TCP-in-TCP), kill-switch, router mode |
 | **Platforms** | Linux, OpenWrt, Android (UniFFI bindings) |
 | **Docs** | Full protocol spec, threat model with honest limitations, deployment & hardening guide — in Russian and English |
-
-### 🧩 [`nrxp`](https://github.com/selbstnull/nrxp) — public design of the protocol
-A written-up public description of NRXP: architecture, session lifecycle, multiplexing and flow control, multipath failover, security model, *what it does **not** protect against*, and the cost of it all. Parts of the stack (frame format / crypto codec, TLS mimicry) are published as buildable source with deployment-specific numbers deliberately redacted — a conscious open-vs-closed trade-off documented file by file.
 
 ### 📡 [`nrxp-smoltcp`](https://github.com/selbstnull/nrxp-smoltcp) — TCP/IP stack fork · Rust
 A fork of [smoltcp](https://github.com/smoltcp-rs/smoltcp), retargeted from bare-metal to a **userspace VPN client**:
@@ -93,9 +91,12 @@ Backend with auth and subscriptions, payments and donations, landing page and mi
 
 | | |
 |---|---|
-| **Systems** | 🦀 Rust (tokio, UniFFI, wasm), custom protocols, TCP/IP internals, TLS/QUIC fingerprints, TUN/netns, AEAD / X25519 |
+| **🎯 Core focus** | 🦀 **Rust** (tokio, UniFFI, wasm) · **network protocols** & transport design · TCP/IP internals, congestion control · TLS/QUIC fingerprints · TUN / netns · AEAD / X25519 |
 | **Frontend** | ⚛️ React, Next.js (SSR/SSG/ISR), TypeScript, MUI, Tailwind, SCSS, WebAssembly |
-| **Backend** | 🟢 Node.js, Nest.js, Express, PostgreSQL, TypeORM, Redis, JWT / OAuth2, Supabase |
+| **Backend** | 🟢 Node.js, Nest.js, Express · ☕ Java, Spring (familiar) · PostgreSQL, TypeORM, Redis · JWT / OAuth2, Supabase |
+| **.NET / C#** | 🟣 C# (Unity); .NET ecosystem — worked closely with .NET teams in fintech projects |
+| **Mobile** | 🤖 Java / Kotlin (Android); Rust core via UniFFI in the Netrunner Android client |
+| **Game dev & 3D** | 🎮 Unity / C#, Rust → WASM games, Blender (Geometry Nodes, procedural shaders) |
 | **Infra & DevOps** | 🐳 Docker, Nginx, systemd, Cloudflare, GitHub Actions, GitLab CI, Gitea, NX monorepo, Webpack / Turbopack |
 
 ---
@@ -103,6 +104,7 @@ Backend with auth and subscriptions, payments and donations, landing page and mi
 ## 🎯 What you get if you hire me
 
 - **Full-cycle engineering** — I can take a feature from protocol spec to deployed node to UI.
+- **Fluent across stacks** — comfortable working next to .NET, JVM / Spring and mobile teams; I pick up a new stack fast, while Rust and protocols are where I go deepest.
 - **Depth when it's needed** — congestion control, flow control, DPI evasion: I read the RFCs, build the test stand, and measure.
 - **Performance by measurement, not by feel** — numbers above come from profiling and benchmarks.
 - **Honest engineering** — my READMEs list limitations, threat models and what is *not* verified.
