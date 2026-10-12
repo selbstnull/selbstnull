@@ -60,7 +60,7 @@ A browser on the [Servo](https://servo.org) engine where **all** traffic goes th
 - Engine embedder patched via a Servo fork (custom `NetworkConnector`); verified with a PID-level leak watcher that nothing bypasses the tunnel; a hermetic mode runs the engine in an empty network namespace.
 - Real-world page corpus of 57 sites: **~88 % fully OK in release**, ~100 % open.
 - Ad/tracker blocking (EasyList), userscripts, signed updates, downloads, in-engine find, WebRTC relay-only mode, ~110 tests + GUI scenarios in nested Xephyr.
-- ⚠️ *Developed with heavy AI-assistant involvement and not human-reviewed yet — the repo says so up front, with an honest feature/limitations table. Not for production use.*
+- ⚠️ *Work in progress — the repo ships an honest feature/limitations table. Not for production use yet.*
 
 ### 🛠️ The rest of the ecosystem (private)
 Backend with auth and subscriptions, payments and donations, landing page and mirror, Android app, a multi-region node fleet, CI/CD on a self-hosted Gitea, a DPI test stand (SNI / JA3 / signature / entropy / active-probe / throttle checks) used to validate the protocol against detection, and a netns-based harness for measuring flow-control and RTT regressions.
