@@ -1,78 +1,121 @@
-# 👋 Hi, I'm Kirill
+<div align="center">
 
-💻 **Software Engineer | Systems & Fullstack Developer**  
-Transitioning from scalable web applications to high-performance network infrastructure. Passionate about building robust systems from the ground up.
+# Hi, I'm Kirill 👋
 
----
+**Systems & Fullstack Software Engineer** · Rust · TypeScript · Networking
 
-## 🔥 Current Focus: Systems Engineering & Custom Protocols
+*I build network protocols from the socket up — and the web apps that sit on top of them.*
 
-For the past several months, my primary focus has been low-level systems programming and network architecture. I am the sole architect and developer of **Netrunner**, a proprietary VPN ecosystem. 
+[![Website](https://img.shields.io/badge/netrunner--vpn.com-000?style=for-the-badge&logo=cloudflare&logoColor=white)](https://netrunner-vpn.com)
+[![Telegram](https://img.shields.io/badge/Telegram-@ktr2102-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/ktr2102)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Kirill_Trapeznikov-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kirill-trapeznikov-57b450374/)
+[![Email](https://img.shields.io/badge/trkir21@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:trkir21@gmail.com)
 
-### **Project: Netrunner VPN** *(Active Development)*
-Building a next-generation, high-performance VPN solution, handling everything from the core networking layer to the client-side architecture.
+📍 Vladivostok → Pattaya, Thailand 🇹🇭 · 🌍 **Open to remote work worldwide**
 
-**Core Engineering Tasks & Achievements:**
-- 🦀 **Protocol Design:** Architected and implemented a proprietary VPN networking protocol entirely from scratch using **Rust**, ensuring maximum throughput, memory safety, and secure data transmission.
-- ⚙️ **Core Infrastructure:** Engineered the underlying network daemon responsible for low-level packet processing, state management, and concurrent connection handling.
-- 💻 **Cross-Platform Clients:** Developing responsive client applications designed to interface seamlessly with the core Rust protocol.
-- 🌐 **Edge & Security:** Configured and deployed edge routing, DNS management, and strict web security policies utilizing **Cloudflare**.
-- 🗄️ **Backend & Auth Integration:** Integrated **Supabase** via GitHub OAuth to provide a scalable, secure backend architecture for user authentication and database management.
+</div>
 
 ---
 
-## 🎯 Why Hire Me?
+## ⚡ TL;DR
 
-- **Full-Cycle Engineering:** I don't just write code; I design systems. From building memory-safe network protocols in Rust to optimizing complex React frontends, I understand how the entire stack communicates.
-- **Deep Problem Solver:** Developing a custom VPN protocol requires relentless research, architectural foresight, and the ability to turn abstract network concepts into working, high-performance code.
-- **Performance Obsessed:** Whether it's processing TCP/UDP packets efficiently, reducing project build times by 40% with Turbopack, or cutting React re-renders from 30 down to 2 — I know how to make software fast.
-
----
-
-## 🚀 Tech Stack
-
-### Systems & Networking
-- **Languages:** 🦀 Rust
-- **Networking:** Custom Network Protocols, WebSockets, Low-level packet processing
-- **Infrastructure:** ☁️ Cloudflare, Supabase
-
-### Web Technologies
-- **Frontend:** ⚛️ React, Next.js (SSR/SSG/ISR), Material UI, SCSS, Tailwind
-- **Backend:** 🟢 Node.js, Express.js, Nest.js
-- **Databases:** 🗄️ PostgreSQL, TypeORM, Redis
-- **Auth:** 🔐 JWT, OAuth2
-
-### DevOps & Architecture
-- **Tools:** 🐳 Docker, Docker Compose, Nginx
-- **Ecosystem:** 📦 NX Monorepo, Webpack, Turbopack
-- **CI/CD:** 🐙 Git, GitLab CI/CD, GitHub Actions
+- 🦀 Designed and built **NRXP / Netrunner** — a multiplexed, multipath L3 VPN in **Rust** that travels as ordinary HTTPS (TLS 1.3, Chrome fingerprint). Client for Linux / OpenWrt / Android, server node, mesh, docs, tests.
+- 🧠 Went down to the TCP/IP layer: forked **smoltcp** and added a from-scratch **BBR** congestion controller, BDP-sized dynamic buffers and AQM for a userspace tunnel.
+- 🌐 Before that: **fullstack product work** (React / Next.js / Nest.js) on a high-traffic fintech platform — **-50 % page load, -40 % build time, re-renders cut from 20–30 to 2–3**.
+- 📦 Ship open-source: a **WebAssembly game library** on npm and a **state-management library** for React.
 
 ---
 
-## 💼 Commercial Experience
+## 🛰️ Netrunner — what I've built
 
-### **Fullstack Developer | FintechIQ**
-*Web application development for a high-traffic microfinance platform ("Stratosphere").*
-- **Performance Optimization:** Fixed complex hydration bugs, resulting in a **50% increase in page load speed**.
-- **State & Rendering:** Upgraded MUI and React Hook Form, drastically reducing unnecessary re-renders (from 20–30 to 2–3) for complex data inputs, vastly improving UX.
-- **Data Reliability:** Resolved critical client-side analytics bugs, providing the business with accurate and reliable user data.
-- **DX Improvements:** Slashed project build times from 20 mins to 12 mins by migrating the build process to Turbopack.
-- **Architecture:** Refactored the legacy UI component library, enforcing DRY principles and accelerating onboarding for new developers.
+> The main project of the last year. Everything from wire format to node deployment to the landing page. Public pieces below; the production multiplexer and apps are closed source.
+
+### 🔐 [`netrunner-core`](https://github.com/selbstnull/netrunner-core) — VPN-proxy core · Rust · AGPL-3.0
+*~2.6 MB of Rust, 300+ commits, 244 unit tests in the protocol crate.*
+
+| Area | What's in it |
+|---|---|
+| **Transport** | Up to 4 parallel TCP "legs" per session; streams migrate seamlessly when a leg dies; credit-window end-to-end flow control; adaptive buffers; BBR per leg |
+| **Crypto** | Authenticated handshake (X25519 + static node key), forward secrecy, AES-GCM / ChaCha20-Poly1305 AEAD |
+| **Censorship resistance** | Chrome 140 TLS fingerprint (JA3/JA4, post-quantum `key_share`), server-side cover flights, irregular length padding, decoy site for scanners and active probes |
+| **Browser profiles** | `profile record` captures a real browser's TLS fingerprint, QUIC Initial and traffic shape, verifies the engine reproduces them, and emits one JSON file |
+| **Beyond TCP** | Optional UDP leg (QUIC/WebRTC mimicry), multi-node mesh with onion routes |
+| **L3 VPN** | TUN + userspace stack (no TCP-in-TCP), kill-switch, router mode |
+| **Platforms** | Linux, OpenWrt, Android (UniFFI bindings) |
+| **Docs** | Full protocol spec, threat model with honest limitations, deployment & hardening guide — in Russian and English |
+
+### 🧩 [`nrxp`](https://github.com/selbstnull/nrxp) — public design of the protocol
+A written-up public description of NRXP: architecture, session lifecycle, multiplexing and flow control, multipath failover, security model, *what it does **not** protect against*, and the cost of it all. Parts of the stack (frame format / crypto codec, TLS mimicry) are published as buildable source with deployment-specific numbers deliberately redacted — a conscious open-vs-closed trade-off documented file by file.
+
+### 📡 [`nrxp-smoltcp`](https://github.com/selbstnull/nrxp-smoltcp) — TCP/IP stack fork · Rust
+A fork of [smoltcp](https://github.com/smoltcp-rs/smoltcp), retargeted from bare-metal to a **userspace VPN client**:
+- **BBRv1 from scratch** — full Startup → Drain → ProbeBW → ProbeRTT state machine, per-ACK delivery-rate sampling, windowed min/max filters. Debugged against real traffic traces (fixed RTprop filter window, ProbeRTT duration, round counting).
+- **Dynamic BDP-sized socket buffers** that resize at runtime from the congestion controller's estimate.
+- **Active queue management** for UDP/ICMP/raw sockets — drop stale packets instead of delivering them late.
+- **Tunnel-aware RTT API** — feed in the RTT measured one layer down, where it actually matters.
+- **`ChannelDevice`** — bounded, backpressure-aware bridge between a tokio TUN loop and smoltcp's synchronous `poll()`.
+
+### 🧭 [`nrxp-browser`](https://github.com/selbstnull/nrxp-browser) + [`nrxp-servo`](https://github.com/selbstnull/nrxp-servo) — experimental browser · Rust *(WIP)*
+A browser on the [Servo](https://servo.org) engine where **all** traffic goes through NRXP — no TUN, no root, no local DNS — and the browser doubles as an ingress/egress node (`nrb node init / invite / deploy`).
+- Engine embedder patched via a Servo fork (custom `NetworkConnector`); verified with a PID-level leak watcher that nothing bypasses the tunnel; a hermetic mode runs the engine in an empty network namespace.
+- Real-world page corpus of 57 sites: **~88 % fully OK in release**, ~100 % open.
+- Ad/tracker blocking (EasyList), userscripts, signed updates, downloads, in-engine find, WebRTC relay-only mode, ~110 tests + GUI scenarios in nested Xephyr.
+- ⚠️ *Developed with heavy AI-assistant involvement and not human-reviewed yet — the repo says so up front, with an honest feature/limitations table. Not for production use.*
+
+### 🛠️ The rest of the ecosystem (private)
+Backend with auth and subscriptions, payments and donations, landing page and mirror, Android app, a multi-region node fleet, CI/CD on a self-hosted Gitea, a DPI test stand (SNI / JA3 / signature / entropy / active-probe / throttle checks) used to validate the protocol against detection, and a netns-based harness for measuring flow-control and RTT regressions.
 
 ---
 
-## 🌍 About Me
+## 🧰 Other open-source
 
-- 📍 Originally from Vladivostok, currently living in **Pattaya, Thailand** 🇹🇭.
-- 🗣 Actively enrolled in an international language program to level up my English for global teams.
-- 🎨 In my downtime, I dive into 3D computer graphics, experimenting with **Blender** (Geometry Nodes, procedural shaders, and architectural visualization).
-- 🎸 I also study music theory (electric guitar, focusing on the CAGED system), explore traditional tea culture (high-grade Pu-erh), and play video games.
-- 💼 Open to remote opportunities worldwide!
+| Project | What |
+|---|---|
+| 🎮 [**Cyberhack**](https://github.com/selbstnull/Cyberhack) | The Cyberpunk 2077 *Breach Protocol* minigame as a **React-ready WebAssembly component** — logic in Rust (Yew → wasm), neon UI in Tailwind v4, published to **npm**, with a server-authoritative mode and localisation. |
+| 🧠 [**fluxless-core**](https://github.com/selbstnull/fluxless-core) · [**fluxless-react**](https://github.com/selbstnull/fluxless-react) | Minimal TypeScript state manager (`Observer` / `Slice` / `Store`) plus a React binding — a lightweight alternative to Redux-style boilerplate. tsup build, Jest tests, Apache-2.0. |
 
 ---
 
-## 📫 Get in Touch
+## 💼 Commercial experience
 
-- ✉️ Email: **trkir21@gmail.com**  
-- 💬 Telegram: [@ktr2102](https://t.me/ktr2102)  
-- 🔗 LinkedIn: [Profile Link](https://www.linkedin.com/in/kirill-trapeznikov-57b450374/)
+### Fullstack Developer — **FintechIQ**
+*"Stratosphere", a high-traffic microfinance platform.*
+
+- ⚡ **+50 % page-load speed** by diagnosing and fixing complex SSR hydration bugs.
+- 🔁 **Re-renders 20–30 → 2–3** on heavy forms after upgrading MUI and React Hook Form.
+- 🏗️ **Build time 20 → 12 min** by moving the build to Turbopack.
+- 📊 Fixed critical client-side analytics bugs so the business got trustworthy user data.
+- 🧱 Refactored the legacy UI component library (DRY, easier onboarding for new devs).
+
+---
+
+## 🚀 Tech stack
+
+| | |
+|---|---|
+| **Systems** | 🦀 Rust (tokio, UniFFI, wasm), custom protocols, TCP/IP internals, TLS/QUIC fingerprints, TUN/netns, AEAD / X25519 |
+| **Frontend** | ⚛️ React, Next.js (SSR/SSG/ISR), TypeScript, MUI, Tailwind, SCSS, WebAssembly |
+| **Backend** | 🟢 Node.js, Nest.js, Express, PostgreSQL, TypeORM, Redis, JWT / OAuth2, Supabase |
+| **Infra & DevOps** | 🐳 Docker, Nginx, systemd, Cloudflare, GitHub Actions, GitLab CI, Gitea, NX monorepo, Webpack / Turbopack |
+
+---
+
+## 🎯 What you get if you hire me
+
+- **Full-cycle engineering** — I can take a feature from protocol spec to deployed node to UI.
+- **Depth when it's needed** — congestion control, flow control, DPI evasion: I read the RFCs, build the test stand, and measure.
+- **Performance by measurement, not by feel** — numbers above come from profiling and benchmarks.
+- **Honest engineering** — my READMEs list limitations, threat models and what is *not* verified.
+- **Documentation habit** — specs, security models and runbooks in two languages.
+
+---
+
+## 🌱 Off the clock
+
+🎨 3D in **Blender** (Geometry Nodes, procedural shaders, arch-viz) · 🎸 guitar & music theory (CAGED) · 🍵 Pu-erh tea · 🎮 games · 🗣️ levelling up my English in an international language programme.
+
+<div align="center">
+
+**Let's talk → [Telegram](https://t.me/ktr2102) · [Email](mailto:trkir21@gmail.com) · [LinkedIn](https://www.linkedin.com/in/kirill-trapeznikov-57b450374/)**
+
+</div>
